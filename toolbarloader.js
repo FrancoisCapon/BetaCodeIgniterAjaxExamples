@@ -5,6 +5,8 @@ function loadDoc(time) {
         time = document.getElementById("debugbar_loader").getAttribute("data-time");
         localStorage.setItem('debugbar-time', time);
     }
+    // FC don't loose the last zero if present
+    time = parseFloat(time).toFixed(6);
 
     localStorage.setItem('debugbar-time-new', time);
 
@@ -12,7 +14,7 @@ function loadDoc(time) {
     let xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             let toolbar = document.getElementById("toolbarContainer");
 
             if (! toolbar) {
@@ -48,7 +50,7 @@ function loadDoc(time) {
             if (typeof ciDebugBar === 'object') {
                 ciDebugBar.init();
             }
-        } else if (this.readyState === 4 && this.status === 404) {
+        } else if (this.readyState === XMLHttpRequest.DONE && this.status === 404) {
             console.log('CodeIgniter DebugBar: File "WRITEPATH/debugbar/debugbar_' + time + '" not found.');
         }
     };
@@ -57,17 +59,24 @@ function loadDoc(time) {
     xhttp.send();
 }
 
-window.oldXHR = window.ActiveXObject
-    ? new ActiveXObject('Microsoft.XMLHTTP')
-    : window.XMLHttpRequest;
+// https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest_in_IE6
+// IE 5 and 6 will use the ActiveX control
+/* window.oldXHR = window.ActiveXObject
+    ? new ActiveXObject('Microsoft.XMLHTTP') 
+    : window.XMLHttpRequest; */
+
+window.oldXHR = window.XMLHttpRequest;
 
 function newXHR() {
     const realXHR = new window.oldXHR();
 
     realXHR.addEventListener("readystatechange", function() {
         // Only success responses and URLs that do not contains "debugbar_time" are tracked
-        if (realXHR.readyState === 4 && realXHR.status.toString()[0] === '2' && realXHR.responseURL.indexOf('debugbar_time') === -1) {
-            if (realXHR.getAllResponseHeaders().indexOf("Debugbar-Time") >= 0) {
+        if (realXHR.readyState === XMLHttpRequest.DONE && realXHR.status.toString()[0] === '2' && realXHR.responseURL.indexOf('debugbar_time') === -1) {
+            // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders
+            // content-type: text/html; charset=utf-8\r\n <= minuscule
+            // if (realXHR.getAllResponseHeaders().indexOf("Debugbar-Time") >= 0) {
+            if (realXHR.getAllResponseHeaders().indexOf("debugbar-time") >= 0) {
                 let debugbarTime = realXHR.getResponseHeader('Debugbar-Time');
 
                 if (debugbarTime) {
@@ -85,4 +94,6 @@ function newXHR() {
 }
 
 window.XMLHttpRequest = newXHR;
-
+Object.assign(window.XMLHttpRequest, window.oldXHR);
+// Object.keys(XMLHttpRequest)
+// (5) ['UNSENT', 'OPENED', 'HEADERS_RECEIVED', 'LOADING', 'DONE']
