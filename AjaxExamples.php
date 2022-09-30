@@ -39,7 +39,7 @@ class AjaxExamples extends BaseController
         sleep(random_int(1,4));
 
         $this->response->setStatusCode(200);
-        $this->response->setHeader('Content-type', $this->request->getHeaderLine('Accept')); // text/plain
+        $this->response->setHeader('Content-Type', $this->request->getHeaderLine('Accept')); // text/plain
         $this->response->setBody((string)$result);
         
         return $this->response;
