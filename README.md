@@ -1,5 +1,4 @@
-# CodeIgniterAjaxExamples
-CodeIgniter Ajax Examples
+# CodeIgniter Ajax Examples
 
 ### `Routes.php`
 
