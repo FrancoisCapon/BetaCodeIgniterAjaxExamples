@@ -371,12 +371,12 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th colspan="2"><mark class="tag">UPPERCASE ot the word <span class="icon-settings inverse"></span></mark></th>
+                                    <th colspan="2"><mark class="tag">UPPERCASE of the word <span class="icon-settings inverse"></span></mark></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="hidden-md hidden-lg">
-                                    <td colspan="2" data-label=""><mark class="tag">UPPERCASE ot the word <span class="icon-settings inverse"></span></mark></td>
+                                    <td colspan="2" data-label=""><mark class="tag">UPPERCASE of the word <span class="icon-settings inverse"></span></mark></td>
                                 </tr>
                                 <tr>
                                     <th>HTTP Method</th>
