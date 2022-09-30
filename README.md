@@ -18,3 +18,7 @@ $routes->get('/ajax-examples/compute-double/(-?[0-9]+)', 'AjaxExamples::computeD
 $routes->post('/ajax-examples/compute-uppercase', 'AjaxExamples::computeUppercase');
 
 ```
+
+### Others `files`
+
+Place them in their respective folders.
