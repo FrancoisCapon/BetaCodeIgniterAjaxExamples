@@ -21,4 +21,10 @@ $routes->post('/ajax-examples/compute-uppercase', 'AjaxExamples::computeUppercas
 
 ### Others `files`
 
-Place them in their respective folders.
+Place them in their respective folders:
+| What | File | Where |
+| :--- | :--- |  :--- |
+| The controller | `AjaxExamples.php` |`\app\Controllers\`|
+| The "page" | `ajax_examples.php` | `\app\Controllers\Views\` |
+| The fixed toobarloader | `toolbarloader.js` | `\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\` |
+
